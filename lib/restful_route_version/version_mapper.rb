@@ -7,11 +7,11 @@ module RestfulRouteVersion
                   :shallow_path => path, :shallow_prefix => path }.merge!(options)
       
       @cached_namespace_blocks ||= {}
-      
+      cache_route = options.delete(:cache_route)
 
       scope(options) { 
         create_controller_class(@scope[:module].to_s.camelize,Module.new)
-        @cached_namespace_blocks[@scope[:path]] = block if options[:cache_route]
+        @cached_namespace_blocks[@scope[:path]] = block if cache_route
         block.call 
       }
     end
